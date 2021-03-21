@@ -106,7 +106,7 @@ public class SlayerESP {
                 return;
             }
             if (spider != null) {
-                AxisAlignedBB aabb = new AxisAlignedBB(spider.posX - 0.5, spider.posY - 1, spider.posZ - 0.5, spider.posX + 0.5, spider.posY, spider.posZ + 0.5);
+                AxisAlignedBB aabb = new AxisAlignedBB(spider.posX - 0.75, spider.posY - 1, spider.posZ - 0.75, spider.posX + 0.75, spider.posY, spider.posZ + 0.75);
                 Utils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
                 return;
             }

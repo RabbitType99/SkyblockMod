@@ -77,7 +77,7 @@ public class ArachneESP {
         if (!Utils.inSkyblock) return;
         if (arachne != null) {
             if (arachneActive && ToggleCommand.highlightArachne) {
-                    AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.5, arachne.posY - 1, arachne.posZ - 0.5, arachne.posX + 0.5, arachne.posY, arachne.posZ + 0.5);
+                    AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.75, arachne.posY - 1, arachne.posZ - 0.75, arachne.posX + 0.75, arachne.posY, arachne.posZ + 0.75);
                     Utils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
                 }
         }
