@@ -62,7 +62,7 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.6-beta3";
+    public static final String VERSION = "1.8.6-beta4";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -319,7 +319,7 @@ public class DankersSkyblockMod {
             Minecraft mc = Minecraft.getMinecraft();
             if (guiToOpen.startsWith("dankergui")) {
                 int page = Character.getNumericValue(guiToOpen.charAt(guiToOpen.length() - 1));
-                mc.displayGuiScreen(new DankerGui(page));
+                mc.displayGuiScreen(new DankerGui(page, ""));
             } else {
                 switch (guiToOpen) {
                     case "displaygui":
