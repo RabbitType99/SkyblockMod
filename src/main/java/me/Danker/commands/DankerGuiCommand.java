@@ -67,6 +67,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[shadowFuryAbility][").append(ToggleCommand.shadowFuryToggled).append("]\n");
 			debug.append("[specialhoe][").append(ToggleCommand.specialHoeRightClick).append("]\n");
 			debug.append("[pickblock][").append(ToggleCommand.swapToPickBlockToggled).append("]\n");
+			debug.append("[entityamount][").append(ToggleCommand.showEntityAmount).append("]\n");
 			debug.append("[dungeonbossmusic][").append(ToggleCommand.dungeonBossMusic).append("]\n");
 			debug.append("# Messages\n");
 			debug.append("[sceptremessages][").append(ToggleCommand.sceptreMessages).append("]\n");

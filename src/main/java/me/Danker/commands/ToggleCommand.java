@@ -36,6 +36,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean cakeTimerToggled;
 	public static boolean highlightSlayers;
 	public static boolean highlightArachne;
+	public static boolean showEntityAmount;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -97,7 +98,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/" +
 										  "startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
 										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/ " +
-										  "/specialhoe/melodytooltips/highlightslayers/highlightArachne/dungeonbossmusic/list>";
+										  "/specialhoe/melodytooltips/highlightslayers/highlightArachne/entityamount/dungeonbossmusic/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -124,7 +125,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "silverfishpuzzle", "icewalkpuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks",
 														  "itemframeonsealanterns", "ultrasequencer", "chronomatron", "superpairs",
-														  "hidetooltipsinaddons", "pickblock", "specialhoe", "melodytooltips", "highlightslayers", "dungeonbossmusic", "list");
+														  "hidetooltipsinaddons", "pickblock", "specialhoe", "melodytooltips", "highlightslayers",
+														  "entityamount", "dungeonbossmusic", "list");
 		}
 		return null;
 	}
@@ -434,6 +436,12 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				highlightArachne = !highlightArachne;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", highlightArachne);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
+
+			case "entityamount":
+				showEntityAmount = !showEntityAmount;
+				ConfigHandler.writeBooleanConfig("toggles", "EntityAmount", showEntityAmount);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Show Entity Amount " + DankersSkyblockMod.SECONDARY_COLOUR + showEntityAmount + DankersSkyblockMod.MAIN_COLOUR + "."));
+
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				if (CustomMusic.dungeonboss != null) {

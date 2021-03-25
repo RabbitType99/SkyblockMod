@@ -60,6 +60,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton shadowFury;
 	private GuiButton specialHoe;
 	private GuiButton melodyTooltips;
+	private GuiButton entityAmount;
 	private GuiButton dungeonBossMusic;
 	// Chat Messages
 	private GuiButton lividDagger;
@@ -161,6 +162,7 @@ public class DankerGui extends GuiScreen {
 		// Page 7
 		melodyTooltips = new GuiButton(0, 0, 0, "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips));
 		highlightArachne = new GuiButton(0, 0, 0, "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne));
+		entityAmount = new GuiButton(0, 0, 0, "Show Entity Amount: " + Utils.getColouredBoolean(ToggleCommand.showEntityAmount));
 
 		allButtons.add(changeDisplay);
 		allButtons.add(onlySlayer);
@@ -206,6 +208,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(specialHoe);
 		allButtons.add(melodyTooltips);
 		allButtons.add(highlightArachne);
+		allButtons.add(entityAmount);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -441,6 +444,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.highlightArachne = !ToggleCommand.highlightArachne;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", ToggleCommand.highlightArachne);
 			highlightArachne.displayString = "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne);
+		} else if (button == entityAmount) {
+			ToggleCommand.showEntityAmount = !ToggleCommand.showEntityAmount;
+			ConfigHandler.writeBooleanConfig("toggles", "EntityAmount", ToggleCommand.showEntityAmount);
+			entityAmount.displayString = "Show Entity Amount: " + Utils.getColouredBoolean(ToggleCommand.showEntityAmount);
 		} else if (button == dungeonBossMusic) {
 			ToggleCommand.dungeonBossMusic = !ToggleCommand.dungeonBossMusic;
 			if (CustomMusic.dungeonboss != null) {

@@ -232,6 +232,7 @@ public class ConfigHandler {
 		ToggleCommand.melodyTooltips = initBoolean("toggles", "MelodyTooltips", false);
 		ToggleCommand.highlightSlayers = initBoolean("toggles", "HighlightSlayers", false);
 		ToggleCommand.highlightArachne = initBoolean("toggles", "HighlightArachne", false);
+		ToggleCommand.showEntityAmount = initBoolean("toggles", "EntityAmount", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
