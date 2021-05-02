@@ -114,14 +114,14 @@ public class DungeonsCommand extends CommandBase {
 			String delimiter = DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------";
 
 			ChatComponentText classLevels = new ChatComponentText(
-					EnumChatFormatting.GOLD + " Selected Class: " + selectedClass + "\n\n" +
-						 EnumChatFormatting.RED + " Catacombs Level: " + catacombs + "\n" +
-						 EnumChatFormatting.YELLOW + " Healer Level: " + healer + "\n" +
-						 EnumChatFormatting.LIGHT_PURPLE + " Mage Level: " + mage + "\n" +
-						 EnumChatFormatting.RED + " Berserk Level: " + berserk + "\n" +
-						 EnumChatFormatting.GREEN + " Archer Level: " + archer + "\n" +
-						 EnumChatFormatting.BLUE + " Tank Level: " + tank + "\n\n" +
-						 EnumChatFormatting.WHITE + " Secrets Found: " + secrets + "\n\n");
+					EnumChatFormatting.LIGHT_PURPLE + "☠ Catacombs Level: " + catacombs + "\n" +
+							EnumChatFormatting.LIGHT_PURPLE + "☬ Selected Class: " + selectedClass + "\n\n" +
+							EnumChatFormatting.GOLD + "☣ Archer Level: " + archer + "\n" +
+							EnumChatFormatting.RED + "⚔ Berserk Level: " + berserk + "\n" +
+							EnumChatFormatting.GREEN + "❤ Healer Level: " + healer + "\n" +
+							EnumChatFormatting.AQUA + "✎ Mage Level: " + mage + "\n" +
+							EnumChatFormatting.GRAY + "❈ Tank Level: " + tank + "\n\n" +
+							EnumChatFormatting.GREEN + "Total Secrets Found: " + EnumChatFormatting.YELLOW + secrets + "\n");
 
 			StringBuilder completionsHoverString = new StringBuilder();
 

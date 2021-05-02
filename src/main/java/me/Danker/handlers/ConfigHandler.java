@@ -18,10 +18,12 @@ import java.io.File;
 
 public class ConfigHandler {
 	public static Configuration config;
-	private final static String file = "config/Danker's Skyblock Mod.cfg";
+	public final static String file = "config/Danker's Skyblock Mod.cfg";
+	public static int cacheTime;
 	
 	public static void init() {
 		config = new Configuration(new File(file));
+		cacheTime = config.getInt("Skins Cache Time", Configuration.CATEGORY_GENERAL, 2000, 1000, Integer.MAX_VALUE, "Changes the amount of time between grabbing each skin. \n If your not downloading all skins or getting 'too many request errors' \n Try increasing your cache time. Time is in Miliseconds 1000 = 1 Second");
 		try {
 			config.load();
 		} catch (Exception ex) {
@@ -367,6 +369,7 @@ public class ConfigHandler {
 		LootTracker.f1TimeSpent = initDouble("catacombs", "floorOneTime", 0);
 		// F2
 		LootTracker.scarfStudies = initInt("catacombs", "scarfStudies", 0);
+		LootTracker.adaptiveSwords = initInt("catacombs", "adaptiveSword", 0);
 		LootTracker.f2CoinsSpent = initDouble("catacombs", "floorTwoCoins", 0);
 		LootTracker.f2TimeSpent = initDouble("catacombs", "floorTwoTime", 0);
 		// F3
@@ -374,7 +377,6 @@ public class ConfigHandler {
 		LootTracker.adaptiveChests = initInt("catacombs", "adaptiveChest", 0);
 		LootTracker.adaptiveLegs = initInt("catacombs", "adaptiveLegging", 0);
 		LootTracker.adaptiveBoots = initInt("catacombs", "adaptiveBoot", 0);
-		LootTracker.adaptiveSwords = initInt("catacombs", "adaptiveSword", 0);
 		LootTracker.f3CoinsSpent = initDouble("catacombs", "floorThreeCoins", 0);
 		LootTracker.f3TimeSpent = initDouble("catacombs", "floorThreeTime", 0);
 		// F4

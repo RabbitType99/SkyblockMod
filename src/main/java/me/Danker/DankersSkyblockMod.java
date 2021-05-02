@@ -6,6 +6,8 @@ import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.events.RenderOverlay;
 import me.Danker.features.*;
+import me.Danker.features.inGameGui.LootTrackerGuiBase;
+import me.Danker.features.inGameGui.renderGuiScreen;
 import me.Danker.features.loot.LootDisplay;
 import me.Danker.features.loot.LootTracker;
 import me.Danker.features.puzzlesolvers.*;
@@ -139,6 +141,8 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new UpdateChecker());
         MinecraftForge.EVENT_BUS.register(new WatcherReadyAlert());
         MinecraftForge.EVENT_BUS.register(new WaterSolver());
+        MinecraftForge.EVENT_BUS.register(new renderGuiScreen());
+        MinecraftForge.EVENT_BUS.register(new LootTrackerGuiBase());
 
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();
@@ -187,6 +191,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
+        ClientCommandHandler.instance.registerCommand(new DrawEntityCommand());
 
         configDirectory = event.getModConfigurationDirectory().toString();
     }
