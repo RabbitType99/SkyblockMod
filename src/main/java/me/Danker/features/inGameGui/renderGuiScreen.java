@@ -1,6 +1,6 @@
 package me.Danker.features.inGameGui;
 
-import static me.Danker.features.inGameGui.LootTrackerGuiBase.downloadSkin;
+
 
 import me.Danker.events.RenderOverlay;
 import net.minecraft.client.Minecraft;
@@ -64,7 +64,7 @@ public class renderGuiScreen extends GuiScreen {
                         entityOtherPlayerMP = null;
                         entityOtherPlayerMP = new CreatePlayer(SkyblockID).entityPlayer();
                         GlStateManager.color(1, 1, 1, 1);
-                        Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText("Spam"));
+
 
                     }
                 new LootTrackerGuiBase().drawEntity(entityOtherPlayerMP, 15, 53, 15,25);

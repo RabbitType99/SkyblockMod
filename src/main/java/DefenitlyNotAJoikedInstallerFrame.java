@@ -50,13 +50,19 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
     private int h;
     private int margin;
 
+
     public DefenitlyNotAJoikedInstallerFrame() {
         try {
+            BufferedImage icon = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader()
+                    .getResourceAsStream("assets/dsm/icons/icon.png"), "Icon not found."));
+            int trayIconHeight = new TrayIcon(icon).getSize().height;
+            Image trayIcon = icon.getScaledInstance(-1,trayIconHeight,Image.SCALE_SMOOTH);
             setName("DankersSkyblockModInstallerFrame");
             setTitle("DSM Installer");
             setResizable(false);
             setSize(TOTAL_WIDTH, TOTAL_HEIGHT);
             setContentPane(getPanelContentPane());
+            setIconImage(trayIcon);
 
             getButtonFolder().addActionListener(this);
             getButtonInstall().addActionListener(this);

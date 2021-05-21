@@ -1,26 +1,12 @@
 package me.Danker.features.inGameGui;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.GameProfile;
 
 
-
-
-
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.client.resources.SkinManager;
 import net.minecraft.entity.passive.*;
-import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,7 +14,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -37,23 +22,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraftforge.common.capabilities.Capability;
 
 
-import java.awt.image.BufferedImage;
-import java.math.BigInteger;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.atomic.AtomicReference;
-
-
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class LootTrackerGuiBase {
-
-
 
 
     private static final WorldClient DUMMY_WORLD = new WorldClient(null, new WorldSettings(0L, WorldSettings.GameType.SURVIVAL,
@@ -236,19 +212,9 @@ public class LootTrackerGuiBase {
     private static HashMap<String, ItemStack> skullMap = new HashMap<>();
     public static HashMap<String, ResourceLocation> skinMap = new HashMap<>();
 
-    public static ExecutorService downloadSkin = Executors.newFixedThreadPool(1);
+    public static final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(10);
 
     public static boolean steveUsed = false;
-
-
-
-
-
-
-
-
-
-
 
 
     //Spooder,Wolf,    Squid[night],witch , ocelot , Rabbit Type99, silverfish, iron golem, snowman, zombie horse
@@ -275,7 +241,6 @@ public class LootTrackerGuiBase {
 
         return itemStack;
     }
-
 
 
     public static ItemStack createSkull(String SbID, String name, String link) {
@@ -333,24 +298,17 @@ public class LootTrackerGuiBase {
     }
 
 
-    public static Entity createEntity () {
+    public static Entity createEntity() {
         Entity entity = new EntityZombie(getDummyWorld());
         return entity;
     }
 
 
-
-
-
-
-
-
-
     public void drawEntity(EntityOtherPlayerMP entity, float x, float y, float yaw, int scale) {
         GlStateManager.enableColorMaterial();
         GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x, (float)y, 50.0F);
-        GlStateManager.scale((float)(-scale), (float)scale, (float)scale);
+        GlStateManager.translate((float) x, (float) y, 50.0F);
+        GlStateManager.scale((float) (-scale), (float) scale, (float) scale);
         GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
         float renderYawOffset = entity.renderYawOffset;
         float f1 = entity.rotationYaw;
@@ -372,7 +330,6 @@ public class LootTrackerGuiBase {
         rendermanager.renderEntityWithPosYaw(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);
 
 
-
         entity.renderYawOffset = renderYawOffset;
         entity.rotationYaw = f1;
         entity.rotationPitch = f2;
@@ -386,55 +343,8 @@ public class LootTrackerGuiBase {
         GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
     }
 
-    public static void downloadPlayerSkin (String name){
-
-
-            String id = LootTrackerGuiBase.resources.get(name);
-            String url = "https://textures.minecraft.net/texture/"+id.substring("skin:".length());
-
-        if(((ThreadPoolExecutor)downloadSkin).getActiveCount() == 0) {
-            downloadSkin.submit(() -> {
-
-            if (!skinMap.containsKey(name)) {
-                ResourceLocation output = new ResourceLocation(null, null);
-                downloadResourceLocation(url, output, DefaultPlayerSkin.getDefaultSkinLegacy(), null);
-                skinMap.put(name, output);
-                Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText("Downloading finished"));
-            }
-
-        });
-        }
     }
 
-    public static ResourceLocation downloadResourceLocation (String url, ResourceLocation outputResource, ResourceLocation defaultResource, IImageBuffer buffer) {
-
-        downloadResource(url, outputResource, defaultResource, buffer);
-        return outputResource;
-    }
-
-
-    public static ThreadDownloadImageData downloadResource (String url, ResourceLocation outputResource, ResourceLocation defaultResource, IImageBuffer buffer) {
-
-        final TextureManager manager = Minecraft.getMinecraft().getTextureManager();
-
-        ThreadDownloadImageData imageData = (ThreadDownloadImageData) manager.getTexture(outputResource);
-
-        if (imageData == null) {
-
-            imageData = new ThreadDownloadImageData(null, url, defaultResource, buffer);
-            manager.loadTexture(outputResource, imageData);
-
-        }
-
-        return imageData;
-    }
-     
-
-
-
-
-
-}
 
 
 
