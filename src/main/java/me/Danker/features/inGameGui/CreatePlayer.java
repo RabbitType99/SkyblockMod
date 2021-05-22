@@ -34,8 +34,6 @@ public class CreatePlayer {
 
     private ResourceLocation playerLocationSkin = null;
     private ResourceLocation playerLocationCape = null;
-    private String skinType = "default";
-    AtomicBoolean threadStarted = new AtomicBoolean(false);
     private static final HashMap<String,BufferedImage> buffer = new HashMap<>();
 
 
@@ -62,21 +60,28 @@ public class CreatePlayer {
 
 
                     entityPlayer = new EntityOtherPlayerMP(getDummyWorld(), gameProfile) {
+                        @Override
                         public ResourceLocation getLocationSkin() {
 
-
-                                playerLocationSkin = downloadSkin(url);
+                            playerLocationSkin = downloadSkin(url);
 
                             return playerLocationSkin == null ? DefaultPlayerSkin.getDefaultSkinLegacy() : playerLocationSkin;
                         }
-
+                        @Override
                         public ResourceLocation getLocationCape() {
                             return playerLocationCape;
                         }
-
+                        @Override
                         public String getSkinType() {
-                            return skinType == null ? DefaultPlayerSkin.getSkinType(this.getUniqueID()) : skinType;
+                            return "default";
                         }
+
+                        @Override
+                        public boolean hasSkin() {
+                            return true;
+                        }
+
+
                     };
                     entityPlayer.setAlwaysRenderNameTag(false);
                     entityPlayer.setCustomNameTag("");
@@ -96,18 +101,20 @@ public class CreatePlayer {
 
             new Thread(() -> {
 
-                BufferedImage image = null;
+                BufferedImage image;
+
+
 
                 try {
-
+                    Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(DefaultPlayerSkin.getDefaultSkinLegacy().getResourceDomain()));
+                    Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(DefaultPlayerSkin.getDefaultSkinLegacy().getResourcePath()));
 
                     URL url1 = new URL(url);
-                    image = ImageIO.read(url1);
-
-                    AffineTransform affineTransform = AffineTransform.getScaleInstance(1,-1);
-                    affineTransform.translate(0,-image.getHeight(null)); //(Math.PI/4),image.getWidth()/2,image.getHeight()/2);
-                    AffineTransformOp op = new AffineTransformOp(affineTransform,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-                    image = op.filter(image,null);
+                    image = ImageIO.read (url1);
+                   // AffineTransform affineTransform = AffineTransform.getScaleInstance(1,-1);
+                   // affineTransform.translate(0,-image.getHeight(null)); //(Math.PI/4),image.getWidth()/2,image.getHeight()/2);
+                   // AffineTransformOp op = new AffineTransformOp(affineTransform,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+                   // image = op.filter(image,null);
 
 
                     buffer.put(name, image);
@@ -121,24 +128,13 @@ public class CreatePlayer {
             }).start();
 
 
-            try {
+
                 if (buffer.containsKey(name)) {
                     texture = new DynamicTexture(buffer.get(name));
-
                 }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(e.getLocalizedMessage()));
-                Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText("hi"));
-            }
-            try {
                 output = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation(name, texture);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(e.getLocalizedMessage()));
-            }
 
 
             if (output != null) {
