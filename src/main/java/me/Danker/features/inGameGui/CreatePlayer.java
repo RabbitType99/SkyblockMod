@@ -1,12 +1,19 @@
 package me.Danker.features.inGameGui;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
+import net.minecraft.client.renderer.ImageBufferDownload;
+import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StringUtils;
 
 
 import javax.imageio.ImageIO;
@@ -43,6 +50,7 @@ public class CreatePlayer {
 
 
 
+
     public CreatePlayer(String name) {
         this.name = name;
     }
@@ -64,6 +72,7 @@ public class CreatePlayer {
                         public ResourceLocation getLocationSkin() {
 
                             playerLocationSkin = downloadSkin(url);
+
 
                             return playerLocationSkin == null ? DefaultPlayerSkin.getDefaultSkinLegacy() : playerLocationSkin;
                         }
@@ -111,13 +120,28 @@ public class CreatePlayer {
 
                     URL url1 = new URL(url);
                     image = ImageIO.read (url1);
-                   // AffineTransform affineTransform = AffineTransform.getScaleInstance(1,-1);
-                   // affineTransform.translate(0,-image.getHeight(null)); //(Math.PI/4),image.getWidth()/2,image.getHeight()/2);
-                   // AffineTransformOp op = new AffineTransformOp(affineTransform,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-                   // image = op.filter(image,null);
+                    
+                   if (image.getHeight() == 32)
+                   {
+
+                       BufferedImage bufferedImage = new BufferedImage(64,64,image.getType());
+                       Graphics2D graphics2D = bufferedImage.createGraphics();
+                       graphics2D.setColor(new Color(255,255,255,255));// no color IntelliJ is trolling
+                       graphics2D.fillRect(0,32,64,32);
+                       graphics2D.drawImage(image,0,0,null);
+
+                       graphics2D.drawImage(image.getSubimage(0,16,16,16),16,48,null);//leg
+                       graphics2D.drawImage(image.getSubimage(40,16,16,16),32,48,null);//arm
+                       graphics2D.dispose();
+                       buffer.put(name, bufferedImage);
+                   }
+                   else {
+                       buffer.put(name, image);
+                   }
 
 
-                    buffer.put(name, image);
+
+
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                     Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(e.getLocalizedMessage()));
@@ -132,8 +156,8 @@ public class CreatePlayer {
                 if (buffer.containsKey(name)) {
                     texture = new DynamicTexture(buffer.get(name));
                 }
-
                 output = Minecraft.getMinecraft().renderEngine.getDynamicTextureLocation(name, texture);
+                
 
 
 
@@ -145,4 +169,8 @@ public class CreatePlayer {
         }
         return skinMap.get(name);
     }
+
+
+
+
 }
